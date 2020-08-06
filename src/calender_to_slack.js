@@ -119,7 +119,7 @@ function main() {
     //メッセージをSlackに送る
     if(post_card_num > 0) {
         post_data.push(post_string + '' + post_date_string + 'の予定だよ！！');
-        for(i = 0; i < post_card_num; i++){
+        for (i = 0; i < post_card_num; i++) {
             var cardname = sheet.getSheetByName('target').getRange(i+2,3).getValue(); // カード名
             var cardurl = sheet.getSheetByName('target').getRange(i+2,4).getValue(); // カードURL
 
