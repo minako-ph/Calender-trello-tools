@@ -6,11 +6,12 @@ $dotenv = Dotenv\Dotenv::createImmutable('../');
 $dotenv->load();
 
 // 固定値
-$key = $_ENV ['TRELLO_KEY'];
-$token = $_ENV ['TRELLO_TOKEN'];
+$key = $_ENV['TRELLO_KEY'];
+$token = $_ENV['TRELLO_TOKEN'];
+$user_name = $_ENV['TRELLO_USER_NAME'];
 
 // ____ １：ボード情報の取得 ____
-$bords_url = 'https://trello.com/1/members/yamamoto_minako/boards?key=' . $key . '&token=' . $token . '&fields=name';
+$bords_url = 'https://trello.com/1/members/' . $user_name . '/boards?key=' . $key . '&token=' . $token . '&fields=name';
 
 // cURLセッションを初期化
 $ch = curl_init();
