@@ -22,15 +22,15 @@ chromeの拡張機能として使用
 
 `src/calender_maker.php` で生成される
 
-`.env.template` を `.env` な名前で複製
-`composer install` を実行
-ターミナルなどで `php src/calender_maker.php` を実行
+- `.env.template` を `.env` な名前で複製
+- `composer install` を実行
+- ターミナルなどで `php src/calender_maker.php` を実行
 
 ## Slackへ１日３回定期的にリマインダーを送信
 
 `src/calender_to_slack.js` をスプレッドシートのスクリプトエディタでGASとして使用
 
-`list` `output` `target` な３シートが存在するスプレッドシートを作成
-スクリプトエディタでプロジェクトのプロパティを指定
-`src/calender_to_slack.js` をスクリプトエディタに貼り付けて１度だけ実行
+- `list` `output` `target` な３シートが存在するスプレッドシートを作成
+- スクリプトエディタでプロジェクトのプロパティを指定
+- `src/calender_to_slack.js` をスクリプトエディタに貼り付けて１度だけ実行  
 以後 自動でトリガーが設定され定期実行される
