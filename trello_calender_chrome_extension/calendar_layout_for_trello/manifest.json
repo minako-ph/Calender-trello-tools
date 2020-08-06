@@ -1,0 +1,31 @@
+{
+  "name": "Calendar layout for trello",
+  "author": "minako",
+  "description": "Trelloのレイアウトをカレンダーにします",
+  "version": "2.0.1",
+  "manifest_version": 2,
+  "web_accessible_resources": ["*"],
+  "icons": {
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://trello.com/b/*/calendar-default-*"],
+      "css": [
+        "css/base.css",
+        "css/default.css"
+      ],
+      "js": ["js/script.js"]
+    },
+    {
+      "matches": ["https://trello.com/b/*/calendar-mini-*"],
+      "css": [
+        "css/base.css",
+        "css/mini.css"
+      ],
+      "js": ["js/script.js"]
+    }
+  ]
+}
