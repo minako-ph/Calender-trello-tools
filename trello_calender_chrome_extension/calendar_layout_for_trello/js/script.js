@@ -8,8 +8,8 @@ window.onload = function () {
     // ヘッダーの取得
     let header_of_header = document.getElementsByClassName('list-header-name');
 
-    for(let i = 0; i < header_of_header.length; i++) {
-        if(header_of_header[i].innerHTML.match(this_month + '/' + today)) {
+    for (let i = 0; i < header_of_header.length; i++) {
+        if (header_of_header[i].innerHTML.match(this_month + '/' + today)) {
             header_of_header[i].closest('.list').classList.add('is-today');
         }
     }
