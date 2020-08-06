@@ -23,7 +23,7 @@ chromeの拡張機能として使用
 
 - `.env.template` を `.env` な名前で複製
 - `composer install` を実行
-- `src/` に移動して `php src/calender_maker.php` を実行
+- `src/` に移動して `php calender_maker.php` を実行
 
 ## Slackへ１日３回定期的にリマインダーを送信
 
