@@ -5,8 +5,8 @@
  */
 
 function setTrigger() {
-    var setTime = new Date();
-    let current_time = setTime.getHours();
+    let setTime = new Date();
+    const current_time = setTime.getHours();
 
     if (0 <= current_time && current_time < 9) {
         // 基本的にここの処理は通らないはず
@@ -30,14 +30,14 @@ function setTrigger() {
 function main() {
     setTrigger();
 
-    var post_card_num = 0
-    let prop = PropertiesService.getScriptProperties().getProperties();
+    let post_card_num = 0
+    const prop = PropertiesService.getScriptProperties().getProperties();
 
     // 固定値
-    let key   = prop.key;  // SlackAPIキー
-    let token = prop.token; // Slackトークン
-    let boardid = prop.bord; // TrelloのボードID
-    let sheet = SpreadsheetApp.openById(prop.sheet_id); // 出力するスプレットシートのID
+    const key   = prop.key;  // SlackAPIキー
+    const token = prop.token; // Slackトークン
+    const boardid = prop.bord; // TrelloのボードID
+    const sheet = SpreadsheetApp.openById(prop.sheet_id); // 出力するスプレットシートのID
 
     // 前回の読み込みをクリア
     sheet.getSheetByName('output').clear();
@@ -45,36 +45,36 @@ function main() {
     sheet.getSheetByName('target').clear();
 
     // リスト情報の取得
-    let listurl = "https://trello.com/1/boards/" + boardid + "/lists?key=" + key + "&token=" + token + "&fields=name";
-    let listres = UrlFetchApp.fetch(listurl);
-    let listjson = JSON.parse(listres.getContentText());
+    const listurl = "https://trello.com/1/boards/" + boardid + "/lists?key=" + key + "&token=" + token + "&fields=name";
+    const listres = UrlFetchApp.fetch(listurl);
+    const listjson = JSON.parse(listres.getContentText());
 
     // カード情報の取得
-    let apiurl = "https://trello.com/1/boards/"+ boardid +"/cards?key="+ key +"&token="+ token;
-    let cardres = UrlFetchApp.fetch(apiurl);
-    let cardjson = JSON.parse(cardres.getContentText());
+    const apiurl = "https://trello.com/1/boards/"+ boardid +"/cards?key="+ key +"&token="+ token;
+    const cardres = UrlFetchApp.fetch(apiurl);
+    const cardjson = JSON.parse(cardres.getContentText());
 
     // Dateオブジェクトの作成
-    let today_obj = new Date();
+    const today_obj = new Date();
 
     // 対象の日付を出し分ける用に現在の時間を取得
-    let current_time = today_obj.getHours();
+    const current_time = today_obj.getHours();
 
     // 今日の日付を取得
-    let today_month = ("0"+(today_obj.getMonth() + 1)).slice(-2);
-    let today_date = ("0"+today_obj.getDate()).slice(-2);
+    const today_month = ("0"+(today_obj.getMonth() + 1)).slice(-2);
+    const today_date = ("0"+today_obj.getDate()).slice(-2);
 
     // 明日の日付を取得
     today_obj.setDate( today_obj.getDate() + 1 );
-    let next_day_month = ("0"+(today_obj.getMonth() + 1)).slice(-2);
-    let next_day_date = ("0"+today_obj.getDate()).slice(-2);
+    const next_day_month = ("0"+(today_obj.getMonth() + 1)).slice(-2);
+    const next_day_date = ("0"+today_obj.getDate()).slice(-2);
 
     // 対象の日付を検索する時に使用する文字列
-    var search_target_string
+    let search_target_string
 
     // postする時に使用する文字列
-    var post_string
-    var post_date_string
+    let post_string
+    let post_date_string
 
     if (0 <= current_time && current_time < 23) {
         search_target_string = today_month + '/' + today_date
@@ -114,14 +114,14 @@ function main() {
         }
     }
 
-    var post_data = ['<!channel>'];
+    let post_data = ['<!channel>'];
 
     //メッセージをSlackに送る
     if(post_card_num > 0) {
         post_data.push(post_string + '' + post_date_string + 'の予定だよ！！');
         for (i = 0; i < post_card_num; i++) {
-            var cardname = sheet.getSheetByName('target').getRange(i+2,3).getValue(); // カード名
-            var cardurl = sheet.getSheetByName('target').getRange(i+2,4).getValue(); // カードURL
+            let cardname = sheet.getSheetByName('target').getRange(i+2,3).getValue(); // カード名
+            let cardurl = sheet.getSheetByName('target').getRange(i+2,4).getValue(); // カードURL
 
             post_data.push('=================\n- カード名：' + cardname +'\n- カードURL：'+ cardurl);
         }
@@ -129,9 +129,9 @@ function main() {
         post_data.push(post_string + ' ' + post_date_string + 'の予定はありません！！');
     }
 
-    let sentence = post_data.join('\r\n');
-    let payload = {'text' : sentence,};
-    let options = {
+    const sentence = post_data.join('\r\n');
+    const payload = {'text' : sentence,};
+    const options = {
         'method' : 'post' ,
         'contentType' : 'application/json' ,
         'payload' : JSON.stringify(payload),
@@ -139,7 +139,7 @@ function main() {
     };
 
     // 投稿するwebhookURL
-    let url = prop.slack;
+    const url = prop.slack;
 
     UrlFetchApp.fetch(url, options);
 }
