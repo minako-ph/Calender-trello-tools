@@ -12,6 +12,14 @@
   },
   "content_scripts": [
     {
+      "matches": ["https://trello.com/b/*/calendar-long-*"],
+      "css": [
+        "css/base.css",
+        "css/long.css"
+      ],
+      "js": ["js/script.js"]
+    },
+    {
       "matches": ["https://trello.com/b/*/calendar-default-*"],
       "css": [
         "css/base.css",
