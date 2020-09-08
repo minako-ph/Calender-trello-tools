@@ -34,15 +34,31 @@ echo 'カレンダーを生成したいボードのIDはどれですか: ';
 $bord_id = trim(fgets(STDIN));
 
 // ____ ３：カレンダー情報の生成 ____
-// １ヶ月分の日付の取得
-$period_object = new DatePeriod(
+echo '生成したいカレンダーはいつのですか？（今月/来月）: ';
+$target_month = trim(fgets(STDIN));
+
+if ($target_month == '今月') {
+    $period_object = new DatePeriod(
+    // 今月の月始まりだよと宣言
+        new DateTime('first day of this month'),
+        // 1日毎の日付データを取得
+        new DateInterval('P1D'),
+        // 来月までの日付を取得(来月の表示はされない)
+        new DateTime('first day of next month')
+    );
+} elseif ($target_month == '来月') {
+    $period_object = new DatePeriod(
     // 来月の月始まりだよと宣言
-    new DateTime('first day of next month'),
-    // 1日毎の日付データを取得
-    new DateInterval('P1D'),
-    // ２ヶ月後までの日付を取得(２ヶ月後の表示はされない)
-    new DateTime('first day of +2 month')
-);
+        new DateTime('first day of next month'),
+        // 1日毎の日付データを取得
+        new DateInterval('P1D'),
+        // ２ヶ月後までの日付を取得(２ヶ月後の表示はされない)
+        new DateTime('first day of +2 month')
+    );
+} else {
+    echo '無効な指定です';
+    return;
+}
 
 // 曜日を日本語に変換するための要素
 $week = ['日', '月', '火', '水', '木', '金', '土'];
