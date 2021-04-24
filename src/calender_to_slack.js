@@ -114,28 +114,48 @@ function main() {
         }
     }
 
-    let post_data = ['<!channel>'];
+    let attachments = []
 
     //メッセージをSlackに送る
     if(post_card_num > 0) {
-        post_data.push(post_string + '' + post_date_string + 'の予定だよ！！');
         for (i = 0; i < post_card_num; i++) {
-            let cardname = sheet.getSheetByName('target').getRange(i+2,3).getValue(); // カード名
-            let cardurl = sheet.getSheetByName('target').getRange(i+2,4).getValue(); // カードURL
+            const cardname = sheet.getSheetByName('target').getRange(i+2,3).getValue(); // カード名
+            const cardurl = sheet.getSheetByName('target').getRange(i+2,4).getValue(); // カードURL
 
-            post_data.push('=================\n- カード名：' + cardname +'\n- カードURL：'+ cardurl);
+            attachments.push({
+                color: "#76a9fa",
+                // text: '',
+                fields: [
+                    {
+                        title: "Title",
+                        value: cardname,
+                        short: true
+                    },
+                    {
+                        title: "URL",
+                        value: `<${cardurl}|Trelloで開く>`,
+                        short: true
+                    }
+                ]
+            })
         }
     } else {
         post_data.push(post_string + ' ' + post_date_string + 'の予定はありません！！');
     }
 
-    const sentence = post_data.join('\r\n');
-    const payload = {'text' : sentence,};
+
+    // 投稿時に使用するデータの生成
+    const data = {
+        "icon_emoji" : ":pencil2:",
+        "username" : "Trello calendar Bot",
+        "text" : `<!channel>\n*${post_string} ${post_date_string}の予定だよ！* :rocket:`,
+        "attachments": attachments
+    };
+
     const options = {
         'method' : 'post' ,
         'contentType' : 'application/json' ,
-        'payload' : JSON.stringify(payload),
-        'link_names' : 1,
+        'payload' : JSON.stringify(data)
     };
 
     // 投稿するwebhookURL
