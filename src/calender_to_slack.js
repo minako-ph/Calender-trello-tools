@@ -139,16 +139,13 @@ function main() {
                 ]
             })
         }
-    } else {
-        post_data.push(post_string + ' ' + post_date_string + 'の予定はありません！！');
     }
-
 
     // 投稿時に使用するデータの生成
     const data = {
         "icon_emoji" : ":pencil2:",
         "username" : "Trello calendar Bot",
-        "text" : `<!channel>\n*${post_string} ${post_date_string}の予定だよ！* :rocket:`,
+        "text" : post_card_num > 0 ? `<!channel>\n*${post_string} ${post_date_string}の予定だよ！* :rocket:` : `\n*${post_string} ${post_date_string}の予定はありません！* :rocket:`,
         "attachments": attachments
     };
 
